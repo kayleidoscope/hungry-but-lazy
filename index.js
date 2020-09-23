@@ -1,3 +1,7 @@
+const appId = "b4955748";
+const appKey = "465177a917ad855574dcacd25dca179a";
+const baseURL = "https://api.edamam.com/search";
+
 let recipeHTML = `<li class="i-recipe-group">
     <div class="recipe-item">
         <h3>Recipe title</h3>
@@ -37,3 +41,54 @@ let subBox4 = `<div class="subBox4">
     <input type="submit" value="Sub into recipe">
     <input type="submit" value="Modify sub list">
 </div>`
+
+//User stories
+
+//I want to find recipes based on number of ingredients and time
+
+function formatQueryParams(params) {
+    console.log('formatQueryParams ran');
+    const queryItems = Object.keys(params)
+        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
+    return queryItems.join('&');
+}
+
+//Use BonAPI to get recipes based on parameters
+function getRecipes() {
+    const params = {
+        app_id: appId,
+        app_key: appKey,
+        q: "chicken",
+        time: 60,
+        ingr: 10,
+    }
+
+    const queryString = formatQueryParams(params);
+
+    const url = baseURL + '?' + queryString;
+
+    console.log(url)
+
+    fetch(url)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error(response.statusText);
+        })
+        .then(responseJson => console.log(responseJson));
+}
+
+
+
+//When form on index page is submitted, do this
+function watchIndexForm() {
+}
+
+
+
+//I want to create a list of substitutions
+
+//I want to dynamically alter the recipe text with my substitutions
+
+$(getRecipes)
