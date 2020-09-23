@@ -1,3 +1,5 @@
+'use strict';
+
 const appId = "b4955748";
 const appKey = "465177a917ad855574dcacd25dca179a";
 const baseURL = "https://api.edamam.com/search";
@@ -54,13 +56,13 @@ function formatQueryParams(params) {
 }
 
 //Use BonAPI to get recipes based on parameters
-function getRecipes() {
+function getRecipes(defIngr, ingrNum, timeNum) {
     const params = {
         app_id: appId,
         app_key: appKey,
-        q: "chicken",
-        time: 60,
-        ingr: 10,
+        q: defIngr,
+        time: ingrNum,
+        ingr: timeNum,
     }
 
     const queryString = formatQueryParams(params);
@@ -83,6 +85,14 @@ function getRecipes() {
 
 //When form on index page is submitted, do this
 function watchIndexForm() {
+    $('#i-form').submit(event => {
+        event.preventDefault();
+        console.log('watchIndexForm ran');
+        const defIngr = $('#i-def-ingr').val();
+        const ingrNum = $('#i-ingr-num').val();
+        const timeNum = $('#i-time-num').val();
+        getRecipes(defIngr, ingrNum, timeNum);
+    })
 }
 
 
@@ -91,4 +101,4 @@ function watchIndexForm() {
 
 //I want to dynamically alter the recipe text with my substitutions
 
-$(getRecipes)
+$(watchIndexForm)
