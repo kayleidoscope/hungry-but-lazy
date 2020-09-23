@@ -1,4 +1,4 @@
-let recipeHTML = `<li class="recipe-group">
+let recipeHTML = `<li class="i-recipe-group">
     <div class="recipe-item">
         <h3>Recipe title</h3>
         <span>time minutes / number ingredients / cuisine</span>

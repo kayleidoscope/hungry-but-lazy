@@ -14,22 +14,21 @@
 </header>
 <section>
     <p>Brief intro text</p>
-    <div>
+    <div class="i-parameters">
         <p>Choose your parameters!</p>
         <form>
-            <input type="number" id="ingredients" name="ingredients"><label for="ingredients"> ingredients</label>
-            <input type="number" id="time" name="time"><label for="time"> minutes</label>
+            <input type="number" id="ingredients" name="ingredients"><label for="ingredients"> ingredients</label><br>
+            <input type="number" id="time" name="time"><label for="time"> minutes</label><br>
             <input type="submit" value="Let's eat!">
             <p id="js-error-message"></p>
         </form>
     </div>
 </section>
 
-<section id="results" class="hidden">
-    <h2 class="hidden">Recipes</h2>
+<section id="i-recipes" class="hidden">
+    <h2>Recipes</h2>
     <p>NUMBER recipes found</p>
-    <ul id="results-list">
-
+    <ul id="i-recipes-list">
     </ul>
 </section>
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>

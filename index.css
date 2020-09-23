@@ -2,14 +2,28 @@
     display: none;
 }
 
+.i-parameters {
+    background-color: lightgreen;
+    margin: 10px auto;
+    padding: 10px;
+    width: 300px;
+}
+
 .square {
-    background-color: red;
+    background-color: darkgreen;
     flex: 1;
     margin: 30px 10px;
 }
 
-.recipe-group {
+#i-recipes-list {
+    list-style: none;
+    padding-left: 0px;
+}
+
+.i-recipe-group {
     display: flex;
+    background-color: lightsteelblue;
+    margin: 10px;
 }
 
 .recipe-item {
@@ -28,4 +42,8 @@
 .jr-top {
     display: flex;
     flex-direction: row;
+}
+
+@media all and (min-width: 800px) {
+
 }
