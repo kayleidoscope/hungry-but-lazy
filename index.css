@@ -16,3 +16,16 @@
     flex: 3;
     order: 2;
 }
+
+.jr-breakouts {
+    display: flex;
+    flex-direction: column;
+    background-color: lightgreen;
+    padding: 10px;
+    margin: 10px;
+}
+
+.jr-top {
+    display: flex;
+    flex-direction: row;
+}
