@@ -4,15 +4,6 @@ const appId = "b4955748";
 const appKey = "465177a917ad855574dcacd25dca179a";
 const baseURL = "https://api.edamam.com/search";
 
-let recipeHTML = `<li class="i-recipe-group">
-    <div class="recipe-item">
-        <h3>Recipe title</h3>
-        <span>time minutes / number ingredients / cuisine</span>
-        <p>Description</p>
-    </div>
-    <div class="square"></div>
-</li>`;
-
 let subBox2 = `<div>
     <p>No [input], huh?</p>
     <p>Choose your substitute</p>
@@ -38,11 +29,17 @@ let subBox3 = `<div class="subBox3">
 let subBox4 = `<div class="subBox4">
     <p>My subs:</p>
     <ul>
-        <li>INPUT > SUB</li>
+        <li>INPUT to SUB</li>
     </ul>
     <input type="submit" value="Sub into recipe">
     <input type="submit" value="Modify sub list">
 </div>`
+
+let recipeBox = `<iframe id="jr-recipe"
+title="Your recipe"
+width="100%"
+height="800px"
+src="https://www.seriouseats.com/recipes/2014/01/simple-orange-carrot-ginger-juice-recipe.html"></iframe>`
 
 //User stories
 
@@ -53,6 +50,23 @@ function formatQueryParams(params) {
     const queryItems = Object.keys(params)
         .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
     return queryItems.join('&');
+}
+
+function displayRecipes(responseJson) {
+    console.log(responseJson);
+    //if there are results, remove them
+    $('#i-recipes-list').empty();
+    //iterate through recipes array
+    for (let i = 0; i < responseJson.hits.length; i++) {
+        $('#i-recipes-list').append(`<li class="i-recipe-group">
+        <div class="recipe-item">
+            <h3>${responseJson.hits[i].recipe.label}</h3>
+            <span>${responseJson.hits[i].recipe.totalTime} minutes / ${responseJson.hits[i].recipe.ingredientLines.length} ingredients</span>
+            <p>${responseJson.hits[i].recipe.ingredientLines}</p>
+        </div>
+        <div class="square"><img src="${responseJson.hits[i].recipe.image}" alt="recipe image"/></div>
+    </li>`)};
+    $('#i-recipes').removeClass('hidden');
 }
 
 //Use BonAPI to get recipes based on parameters
@@ -78,9 +92,8 @@ function getRecipes(defIngr, ingrNum, timeNum) {
             }
             throw new Error(response.statusText);
         })
-        .then(responseJson => console.log(responseJson));
+        .then(responseJson => displayRecipes(responseJson));
 }
-
 
 
 //When form on index page is submitted, do this
@@ -102,3 +115,9 @@ function watchIndexForm() {
 //I want to dynamically alter the recipe text with my substitutions
 
 $(watchIndexForm)
+
+
+
+
+
+
