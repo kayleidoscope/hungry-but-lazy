@@ -1,0 +1,18 @@
+.hidden {
+    display: none;
+}
+
+.square {
+    background-color: red;
+    flex: 1;
+    margin: 30px 10px;
+}
+
+.recipe-group {
+    display: flex;
+}
+
+.recipe-item {
+    flex: 3;
+    order: 2;
+}
