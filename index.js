@@ -52,31 +52,40 @@ function formatQueryParams(params) {
     return queryItems.join('&');
 }
 
+function formatIngredients(responseJson, i) {
+    let ingrList = responseJson.hits[i].recipe.ingredientLines;
+    let ingrListBetter = ingrList.toString();
+    let ingrListBest = ingrListBetter.replace(',', ', ')
+    return ingrListBest;
+}
+
+
 function displayRecipes(responseJson) {
     console.log(responseJson);
     //if there are results, remove them
     $('#i-recipes-list').empty();
     //iterate through recipes array
     for (let i = 0; i < responseJson.hits.length; i++) {
+        // formatIngredients(responseJson, i);
         $('#i-recipes-list').append(`<li class="i-recipe-group">
         <div class="recipe-item">
             <h3>${responseJson.hits[i].recipe.label}</h3>
-            <span>${responseJson.hits[i].recipe.totalTime} minutes / ${responseJson.hits[i].recipe.ingredientLines.length} ingredients</span>
-            <p>${responseJson.hits[i].recipe.ingredientLines}</p>
+            <h4>${responseJson.hits[i].recipe.ingredientLines.length} ingredients</h4>
+            <p>${formatIngredients(responseJson, i)}</p>
         </div>
         <div class="square"><img src="${responseJson.hits[i].recipe.image}" alt="recipe image"/></div>
     </li>`)};
     $('#i-recipes').removeClass('hidden');
 }
 
+
 //Use BonAPI to get recipes based on parameters
-function getRecipes(defIngr, ingrNum, timeNum) {
+function getRecipes(defIngr, ingrNum) {
     const params = {
         app_id: appId,
         app_key: appKey,
         q: defIngr,
-        time: ingrNum,
-        ingr: timeNum,
+        ingr: ingrNum,
     }
 
     const queryString = formatQueryParams(params);
@@ -103,8 +112,7 @@ function watchIndexForm() {
         console.log('watchIndexForm ran');
         const defIngr = $('#i-def-ingr').val();
         const ingrNum = $('#i-ingr-num').val();
-        const timeNum = $('#i-time-num').val();
-        getRecipes(defIngr, ingrNum, timeNum);
+        getRecipes(defIngr, ingrNum);
     })
 }
 
