@@ -73,9 +73,13 @@ function displayRecipes(responseJson) {
         <div class="recipe-item">
             <h3 class-"i-my-recipe">${responseJson.hits[i].recipe.label}</h3>
             <h4 class="i-ingrs-num">${responseJson.hits[i].recipe.ingredientLines.length} ingredients</h4>
-            <ol class="ingr-list-${i} i-my-ingrs">${responseJson.hits[i].recipe.ingredientLines}</ol>
+            <ol class="ingr-list-${i} i-my-ingrs">${
+                responseJson.hits[i].recipe.ingredientLines.map(item =>
+                    `<li>${item}</li>`).join("")}</ol>
             <form action="#" id="i-lets-make-it">
-                <input type="submit" value="Let's make it!" />
+                <input type="submit" value="Let's make it!" data-recipe=${JSON.stringify({
+
+                })}/>
             </form>
         </div>
         <div class="square"><img src="${responseJson.hits[i].recipe.image}" alt="recipe image"/></div>
