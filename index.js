@@ -60,6 +60,7 @@ function formatIngredients(responseJson, i) {
     }
 }
 
+let destination = `/just-recipe.html`
 
 function displayRecipes(responseJson) {
     console.log(responseJson);
@@ -70,10 +71,10 @@ function displayRecipes(responseJson) {
         // formatIngredients(responseJson, i);
         $('#i-recipes-list').append(`<li class="i-recipe-group">
         <div class="recipe-item">
-            <h3>${responseJson.hits[i].recipe.label}</h3>
-            <h4>${responseJson.hits[i].recipe.ingredientLines.length} ingredients</h4>
-            <ol class="ingr-list-${i}">${formatIngredients(responseJson, i)}</ol>
-            <form action="/just-recipe.html">
+            <h3 class-"i-my-recipe">${responseJson.hits[i].recipe.label}</h3>
+            <h4 class="i-ingrs-num">${responseJson.hits[i].recipe.ingredientLines.length} ingredients</h4>
+            <ol class="ingr-list-${i} i-my-ingrs">${responseJson.hits[i].recipe.ingredientLines}</ol>
+            <form action="#" id="i-lets-make-it">
                 <input type="submit" value="Let's make it!" />
             </form>
         </div>
@@ -121,13 +122,27 @@ function watchIndexForm() {
     })
 }
 
+function watchLetsMakeIt() {
+    $('#i-recipes').on('submit', event => {
+        event.preventDefault();
+        console.log('watchLetsMakeIt ran');
+        console.log($(this).closest('div.recipe-item'))
+        // let myRecipe = [];
+        // let recipeTitle = $(this).closest('div').find('h3').html();
+        // console.log(recipeTitle);
+        // let recipeIngrs = $(this).closest('div').find('ol');
+        // console.log(recipeIngrs);
+        // let recipePic = $(this).closest('.i-recipe-group').find('img').attr('src');
+        // console.log(recipePic);
+    })
+}
 
+function onPageLoad() {
+    watchIndexForm();
+    watchLetsMakeIt();
+}
 
-//I want to create a list of substitutions
-
-//I want to dynamically alter the recipe text with my substitutions
-
-$(watchIndexForm)
+$(onPageLoad)
 
 
 
