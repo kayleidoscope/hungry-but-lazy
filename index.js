@@ -54,9 +54,10 @@ function formatQueryParams(params) {
 
 function formatIngredients(responseJson, i) {
     let ingrList = responseJson.hits[i].recipe.ingredientLines;
-    let ingrListBetter = ingrList.toString();
-    let ingrListBest = ingrListBetter.replace(',', ', ')
-    return ingrListBest;
+    for (let j = 0; j < responseJson.hits[i].recipe.ingredientLines.length; j++) {
+        $(`.ingr-list-${j}`).append(`<li>work dammit</li>`);
+        console.log()
+    }
 }
 
 
@@ -71,10 +72,14 @@ function displayRecipes(responseJson) {
         <div class="recipe-item">
             <h3>${responseJson.hits[i].recipe.label}</h3>
             <h4>${responseJson.hits[i].recipe.ingredientLines.length} ingredients</h4>
-            <p>${formatIngredients(responseJson, i)}</p>
+            <ol class="ingr-list-${i}">${formatIngredients(responseJson, i)}</ol>
+            <form action="/just-recipe.html">
+                <input type="submit" value="Let's make it!" />
+            </form>
         </div>
         <div class="square"><img src="${responseJson.hits[i].recipe.image}" alt="recipe image"/></div>
     </li>`)};
+    $('.i-recipes-found').html(`${responseJson.hits.length} recipes found!`)
     $('#i-recipes').removeClass('hidden');
 }
 

@@ -6,13 +6,16 @@
     background-color: lightgreen;
     margin: 10px auto;
     padding: 10px;
-    width: 300px;
+    width: 275px;
 }
 
 .square {
-    background-color: darkgreen;
     flex: 1;
     margin: 30px 10px;
+}
+
+.square img {
+    max-width: 200px;
 }
 
 #i-recipes-list {
@@ -22,8 +25,10 @@
 
 .i-recipe-group {
     display: flex;
+    flex-direction: column;
     background-color: lightsteelblue;
     margin: 10px;
+    padding: 15px;
 }
 
 .recipe-item {
@@ -44,6 +49,8 @@
     flex-direction: row;
 }
 
-@media all and (min-width: 800px) {
-
+@media all and (min-width: 500px) {
+    .i-recipe-group {
+        flex-direction: row;
+    }
 }
