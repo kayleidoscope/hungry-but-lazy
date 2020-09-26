@@ -76,10 +76,11 @@ function displayRecipes(responseJson) {
             <ol class="ingr-list-${i} i-my-ingrs">${
                 responseJson.hits[i].recipe.ingredientLines.map(item =>
                     `<li>${item}</li>`).join("")}</ol>
-            <form action="#" id="i-lets-make-it">
-                <input type="submit" value="Let's make it!" data-recipe=${JSON.stringify({
-
-                })}/>
+            <form action="/just-recipe.html" id="i-lets-make-it">
+                <input type="hidden" name="title" value="${responseJson.hits[i].recipe.label}">
+                <input type="hidden" name="ingredients" value="${responseJson.hits[i].recipe.ingredientLines}">
+                <input type="hidden" name="src" value="${responseJson.hits[i].recipe.image}">
+                <input id="test" type="submit" value="Let's make it!"/>
             </form>
         </div>
         <div class="square"><img src="${responseJson.hits[i].recipe.image}" alt="recipe image"/></div>
@@ -128,27 +129,34 @@ function watchIndexForm() {
 
 function watchLetsMakeIt() {
     $('#i-recipes').on('submit', event => {
-        event.preventDefault();
         console.log('watchLetsMakeIt ran');
-        console.log($(this).closest('div.recipe-item'))
-        // let myRecipe = [];
-        // let recipeTitle = $(this).closest('div').find('h3').html();
-        // console.log(recipeTitle);
-        // let recipeIngrs = $(this).closest('div').find('ol');
-        // console.log(recipeIngrs);
-        // let recipePic = $(this).closest('.i-recipe-group').find('img').attr('src');
-        // console.log(recipePic);
     })
+}
+
+function populateJRPage() {
+    const [title, ingredients, src] = decodeURIComponent(window.location.search.substr(1)
+            .replaceAll("+", " "))
+            .split('&')
+            .map(part => part.split("=")[1])
+    $('.jr-recipe-title').html(`${title}`);
+    $('.jr-ingr-length').html(`${ingredients.length} ingredients`);
+    $('.jr-recipe-img').html(`<img src="${src}" alt="recipe image">`);
+    $('.jr-ingr').html(`${ingredients}`)
 }
 
 function onPageLoad() {
     watchIndexForm();
     watchLetsMakeIt();
+    populateJRPage();
 }
 
 $(onPageLoad)
 
+const accessToken = "ec69b072c20a1d404b390bc1afa21f0b15b196d4";
 
+function getSub() {
+
+}
 
 
 
