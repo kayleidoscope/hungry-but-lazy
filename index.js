@@ -35,12 +35,6 @@ let subBox4 = `<div class="subBox4">
     <input type="submit" value="Modify sub list">
 </div>`
 
-let recipeBox = `<iframe id="jr-recipe"
-title="Your recipe"
-width="100%"
-height="800px"
-src="https://www.seriouseats.com/recipes/2014/01/simple-orange-carrot-ginger-juice-recipe.html"></iframe>`
-
 //User stories
 
 //I want to find recipes based on number of ingredients and time
@@ -80,6 +74,8 @@ function displayRecipes(responseJson) {
                 <input type="hidden" name="title" value="${responseJson.hits[i].recipe.label}">
                 <input type="hidden" name="ingredients" value="${responseJson.hits[i].recipe.ingredientLines}">
                 <input type="hidden" name="src" value="${responseJson.hits[i].recipe.image}">
+                <input type="hidden" name="num" value="${responseJson.hits[i].recipe.ingredientLines.length}">
+                <input type="hidden" name="link" value="${responseJson.hits[i].recipe.url}">
                 <input id="test" type="submit" value="Let's make it!"/>
             </form>
         </div>
@@ -116,6 +112,12 @@ function getRecipes(defIngr, ingrNum) {
 }
 
 
+function unhappyResult() {
+    $('#i-recipes-list').empty();
+    $('.i-recipes-found').html(`No recipes found. Try a different ingredient or adjust the number of ingredients you want to use.`)
+    $('#i-recipes').removeClass('hidden');
+}
+
 //When form on index page is submitted, do this
 function watchIndexForm() {
     $('#i-form').submit(event => {
@@ -123,7 +125,11 @@ function watchIndexForm() {
         console.log('watchIndexForm ran');
         const defIngr = $('#i-def-ingr').val();
         const ingrNum = $('#i-ingr-num').val();
-        getRecipes(defIngr, ingrNum);
+        if (defIngr.length === 0 || ingrNum === 0) {
+            unhappyResult();
+        } else {
+            getRecipes(defIngr, ingrNum);
+        }
     })
 }
 
@@ -134,14 +140,19 @@ function watchLetsMakeIt() {
 }
 
 function populateJRPage() {
-    const [title, ingredients, src] = decodeURIComponent(window.location.search.substr(1)
+    const [title, ingredients, src, num, link] = decodeURIComponent(window.location.search.substr(1)
             .replaceAll("+", " "))
             .split('&')
             .map(part => part.split("=")[1])
     $('.jr-recipe-title').html(`${title}`);
-    $('.jr-ingr-length').html(`${ingredients.length} ingredients`);
+    $('.jr-ingr-num').html(`${num} ingredients`);
     $('.jr-recipe-img').html(`<img src="${src}" alt="recipe image">`);
     $('.jr-ingr').html(`${ingredients}`)
+    $('.jr-recipe-box').append(`<iframe id="jr-recipe"
+    title="Your recipe"
+    width="100%"
+    height="800px"
+    src="${link}"></iframe>`)
 }
 
 function onPageLoad() {
@@ -151,12 +162,6 @@ function onPageLoad() {
 }
 
 $(onPageLoad)
-
-const accessToken = "ec69b072c20a1d404b390bc1afa21f0b15b196d4";
-
-function getSub() {
-
-}
 
 
 
