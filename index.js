@@ -144,10 +144,10 @@ function populateJRPage() {
             .replaceAll("+", " "))
             .split('&')
             .map(part => part.split("=")[1])
+    const prettyIngr = ingredients.replaceAll(',');
     $('.jr-recipe-title').html(`${title}`);
     $('.jr-ingr-num').html(`${num} ingredients`);
     $('.jr-recipe-img').html(`<img src="${src}" alt="recipe image">`);
-    $('.jr-ingr').html(`${ingredients}`)
     $('.jr-recipe-box').append(`<iframe id="jr-recipe"
     title="Your recipe"
     width="100%"
@@ -155,10 +155,44 @@ function populateJRPage() {
     src="${link}"></iframe>`)
 }
 
+//BonAPI stuff
+
+function getSubs() {
+    console.log('getSubs ran')
+    let subUrl = "https://www.bon-api.com/api/v1/ingredient/alternatives/whole_cow_milk/";
+    let token = "Token ec69b072c20a1d404b390bc1afa21f0b15b196d4";
+
+    const options = {
+        headers: new Headers({
+            "Authorization": token})
+    };
+
+    fetch(subUrl, options)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error(response.statusText);
+        })
+        .then(responseJson => console.log(responseJson));
+}
+
+function watchSubSubmit() {
+    $('.jr-sub-station').on('submit', event => {
+        event.preventDefault();
+        console.log('watchSubSubmit ran')
+        let request = $('.jr-sub-request').val();
+        getSubs();
+    })
+}
+
+
+
 function onPageLoad() {
     watchIndexForm();
     watchLetsMakeIt();
     populateJRPage();
+    watchSubSubmit();
 }
 
 $(onPageLoad)

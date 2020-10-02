@@ -9,13 +9,26 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-<header>
-    <h1>Hungry but Lazy</h1>
-</header>
-    <div class="jr-recipe-img"></div>
-    <div class="jr-top">
-        <section class="jr-breakouts jr-top-item"> 
-            <iframe width="100%" height="200px" src="https://bon-api.com/iframe/1"></iframe>
+    <header>
+        <h1>Hungry but Lazy</h1>
+    </header>
+    <div class="jr-group">
+        <div class="jr-item">
+            <div class="jr-recipe-img"></div>
+            <div>
+                <h2 class="jr-recipe-title"></h2>
+                <span class="jr-ingr-num"></span>
+            </div>
+        </div>
+        <section class="jr-breakouts"> 
+            <div class="jr-sub-station">
+                <h2>Sub station</h2>
+                <p>Don't feel like going to the grocery store? Find some alternatives!</p>
+                <form>
+                    <input type="text" name="sub-station" class="jr-sub-request">
+                    <input type="submit" value="Sub!">
+                </form>
+            </div>
             <div class="jr-recipe-ingredients">
                 <h2>Recipe ingredients</h2>
                 <ul>
@@ -23,22 +36,10 @@
                 </ul>
             </div>
         </section>
-<section>
-        <div class="jr-top-item">
-            <h2 class="jr-recipe-title"></h2>
-            <span class="jr-ingr-num"></span>
-            <p class="jr-ingr"></p>
-        </div>
     </div>
-    <div class="jr-recipe-box"></div>
-</section>
-<p id="js-error-message"></p>
-<section id="results" class="hidden">
-    <h2 class="hidden">Recipes</h2>
-    <ul id="results-list">
-
-    </ul>
-</section>
+    <section>
+        <div class="jr-recipe-box"></div>
+    </section>
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="index.js"></script>
 </body>
