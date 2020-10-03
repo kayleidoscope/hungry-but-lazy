@@ -70,7 +70,7 @@ function displayRecipes(responseJson) {
             <ol class="ingr-list-${i} i-my-ingrs">${
                 responseJson.hits[i].recipe.ingredientLines.map(item =>
                     `<li>${item}</li>`).join("")}</ol>
-            <form action="/just-recipe.html" id="i-lets-make-it">
+            <form action="hungry-but-lazy/just-recipe.html" id="i-lets-make-it">
                 <input type="hidden" name="title" value="${responseJson.hits[i].recipe.label}">
                 <input type="hidden" name="ingredients" value="${responseJson.hits[i].recipe.ingredientLines}">
                 <input type="hidden" name="src" value="${responseJson.hits[i].recipe.image}">
