@@ -63,13 +63,13 @@ function displayRecipes(responseJson) {
         // formatIngredients(responseJson, i);
         $('#i-recipes-list').append(`<li class="i-recipe-group">
         <div class="recipe-item">
-            <h3 class-"i-my-recipe">${responseJson.hits[i].recipe.label}</h3>
+            <h3 class="i-my-recipe">${responseJson.hits[i].recipe.label}</h3>
             <h4 class="i-ingrs-num">${responseJson.hits[i].recipe.ingredientLines.length} ingredients</h4>
             <ol class="ingr-list-${i} i-my-ingrs">${
                 responseJson.hits[i].recipe.ingredientLines.map(item =>
                     `<li>${item}</li>`).join("")}</ol>
-            <form id="i-lets-make-it">
-                <input id="test" type="submit" value="Let's make it!"/>
+            <form class="i-lets-make-it">
+                <input action="#top-of-page" type="submit" value="Let's make it!"/>
                 <input type="hidden" name="title" value="${responseJson.hits[i].recipe.label}">
                 <input type="hidden" name="ingredients" value="${responseJson.hits[i].recipe.ingredientLines}">
                 <input type="hidden" name="src" value="${responseJson.hits[i].recipe.image}">
@@ -123,6 +123,7 @@ function watchLetsEat() {
         console.log('watchIndexForm ran');
         const defIngr = $('#i-def-ingr').val();
         const ingrNum = $('#i-ingr-num').val();
+    //make both fields required or else account for not having an ingredient num value
         if (defIngr.length === 0 || ingrNum === 0) {
             unhappyResult();
         } else {
@@ -136,10 +137,10 @@ function watchLetsMakeIt() {
         event.preventDefault();
         console.log('watchLetsMakeIt ran');
         $(".everything").empty();
-        let title = $(event.currentTarget).closest("#i-lets-make-it").find("input[name=title]").val();
-        let src = $("input[name=src]").val();
-        let num = $("input[name=num]").val();
-        let link = $("input[name=link]").val();
+        let title = $(event.target).closest(".i-lets-make-it").find('input[name="title"]').val();
+        let src = $(event.target).closest(".i-lets-make-it").find('input[name="src"]').val();
+        let num = $(event.target).closest(".i-lets-make-it").find('input[name="num"]').val();
+        let link = $(event.target).closest(".i-lets-make-it").find('input[name="link"]').val();
         holdRecipeHTML(src, title, num, link);
     })
 }
