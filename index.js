@@ -69,7 +69,7 @@ function displayRecipes(responseJson) {
                 responseJson.hits[i].recipe.ingredientLines.map(item =>
                     `<li>${item}</li>`).join("")}</ol>
             <form class="i-lets-make-it">
-                <input action="#top-of-page" type="submit" value="Let's make it!"/>
+                <a href="#top-of-page"><input type="submit" value="Let's make it!"/></a>
                 <input type="hidden" name="title" value="${responseJson.hits[i].recipe.label}">
                 <input type="hidden" name="ingredients" value="${responseJson.hits[i].recipe.ingredientLines}">
                 <input type="hidden" name="src" value="${responseJson.hits[i].recipe.image}">
@@ -167,31 +167,13 @@ function watchLetsMakeIt() {
 
 function holdRecipeHTML(src, title, num, link) {
     const html= `<div class="jr-group">
-        <div class="jr-item">
             <div class="jr-recipe-img">
                 <img src="${src}" alt="recipe image">
             </div>
             <div>
                 <h2>${title}</h2>
                 <span>${num} ingredients</span>
-            </div>
         </div>
-        <section class="jr-breakouts"> 
-            <div class="jr-sub-station">
-                <h2>Sub station</h2>
-                <p>Don't feel like going to the grocery store? Find some alternatives!</p>
-                <iframe width="100%" height="400" src="https://bon-api.com/iframe/1"></iframe>
-            </div>
-            <div class="jr-recipe-ingredients">
-                <h2>Sub log</h2>
-                <form>
-                    <label for="have-not">I'm swapping </label><input type="text" name="have-not" id="have-not">
-                    <label for="have">for </label><input type="text" name="have" id="have">.
-                    <input type="submit" class="add-sub" value="Add">
-                </form>
-                <ul id="jr-sub-log"></ul>
-            </div>
-        </section>
     </div>
     <section>
         <div class="jr-recipe-box">
