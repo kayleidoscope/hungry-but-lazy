@@ -39,7 +39,8 @@ function formatQueryParams(params) {
 
 //Get those recipes on the page
 function displayRecipes(responseJson) {
-    //if 0 recipes are returned, 
+    //if 0 recipes are returned, run the unhappyResult function end the
+    //function then and there
     if (responseJson.count === 0) {
         unhappyResult();
         return;
@@ -47,13 +48,15 @@ function displayRecipes(responseJson) {
     console.log(responseJson);
     //if there are results, remove them
     $('#i-recipes-list').empty();
-    //iterate through recipes array
+    //iterate through recipes array and put the appropriate strings in the
+    //appropriate places
     for (let i = 0; i < responseJson.hits.length; i++) {
         $('#i-recipes-list').append(`<li class="i-recipe-group">
         <div class="recipe-item">
             <h3 class="i-my-recipe">${responseJson.hits[i].recipe.label}</h3>
             <h4 class="i-ingrs-num">${responseJson.hits[i].recipe.ingredientLines.length} ingredients</h4>
             <ol class="ingr-list-${i} i-my-ingrs">${
+                //make the ingredients look nice
                 responseJson.hits[i].recipe.ingredientLines.map(item =>
                     `<li>${item}</li>`).join("")}</ol>
             <form class="i-lets-make-it">
@@ -98,7 +101,7 @@ function getRecipes(defIngr, ingrNum) {
         .then(responseJson => displayRecipes(responseJson));
 }
 
-
+//if improper inputs are given, display the following HTML
 function unhappyResult() {
     $('#i-recipes-list').empty();
     $('.i-recipes-found').html(`No recipes found. Try a different ingredient or adjust the number of ingredients you want to use.`)
@@ -120,6 +123,8 @@ function watchLetsEat() {
         })
 }
 
+//When the "Let's make it" button is clicked, replace parameters box with recipe
+//information, as stored in holdRecipeHTML function
 function watchLetsMakeIt() {
     $('#i-recipes').on('submit', event => {
         event.preventDefault();
@@ -130,10 +135,12 @@ function watchLetsMakeIt() {
         let num = $(event.target).closest(".i-lets-make-it").find('input[name="num"]').val();
         let link = $(event.target).closest(".i-lets-make-it").find('input[name="link"]').val();
         holdRecipeHTML(src, title, num, link);
+        //whenever this button is clicked, send us to top of page
         location = "#";
     })
 }
 
+//This is the HTML that creates the appropriate recipe page
 function holdRecipeHTML(src, title, num, link) {
     const html= `<div class="jr-group">
             <div class="jr-recipe-img">
@@ -164,6 +171,7 @@ function holdRecipeHTML(src, title, num, link) {
     $(".everything").append(html);
 }
 
+//when this button is clicked, make the page look like it did on page load
 function watchNewParams() {
     $(".everything").on("submit", ".new-params", event => {
         event.preventDefault();
