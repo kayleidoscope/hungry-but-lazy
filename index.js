@@ -4,10 +4,7 @@ const appId = "b4955748";
 const appKey = "465177a917ad855574dcacd25dca179a";
 const baseURL = "https://api.edamam.com/search";
 
-//User stories
-
-//I want to find recipes based on number of ingredients and time
-
+//returns starting HTML when called
 function holdIndexHTML() {
     return `
     <p>Welcome to Hungry but Lazy!</p>
@@ -16,17 +13,19 @@ function holdIndexHTML() {
     <div class="i-parameters">
         <p>Choose your parameters!</p>
         <form id="i-form">
-            <input type="text" id="i-def-ingr" name="def-ingredient"><label for="def-ingredient"> is an ingredient I definitely have.</label><br>
-            <input type="number" id="i-ingr-num" name="ingredients"><label for="ingredients"> is the number of ingredients I'm willing to use.</label><br>
+            <input type="text" id="i-def-ingr" name="def-ingredient" required><label for="def-ingredient"> is an ingredient I definitely have.</label><br>
+            <input type="number" id="i-ingr-num" name="ingredients" required><label for="ingredients"> is the number of ingredients I'm willing to use.</label><br>
             <input type="submit" value="Let's eat!">
             <p id="js-error-message"></p>
         </form>
     </div>`
 }
 
+//render starting HTML, whether at page load or when directed from recipe page
 function renderIndex(hideRecipes) {
     console.log("renderIndex ran")
     $(".everything").empty();
+    //if coming from recipe page (true), add .hidden back to hide list of recipes
     if (hideRecipes) $("#i-recipes").addClass("hidden");
     $(".everything").append(holdIndexHTML());
 }
@@ -38,21 +37,18 @@ function formatQueryParams(params) {
     return queryItems.join('&');
 }
 
-function formatIngredients(responseJson, i) {
-    let ingrList = responseJson.hits[i].recipe.ingredientLines;
-    for (let j = 0; j < responseJson.hits[i].recipe.ingredientLines.length; j++) {
-        $(`.ingr-list-${j}`).append(`<li>work dammit</li>`);
-        console.log()
-    }
-}
-
+//Get those recipes on the page
 function displayRecipes(responseJson) {
+    //if 0 recipes are returned, 
+    if (responseJson.count === 0) {
+        unhappyResult();
+        return;
+    }
     console.log(responseJson);
     //if there are results, remove them
     $('#i-recipes-list').empty();
     //iterate through recipes array
     for (let i = 0; i < responseJson.hits.length; i++) {
-        // formatIngredients(responseJson, i);
         $('#i-recipes-list').append(`<li class="i-recipe-group">
         <div class="recipe-item">
             <h3 class="i-my-recipe">${responseJson.hits[i].recipe.label}</h3>
@@ -76,7 +72,8 @@ function displayRecipes(responseJson) {
 }
 
 
-//Use BonAPI to get recipes based on parameters
+//Taking the input values, create the API url, fetch that url, then format
+//the response in JSON
 function getRecipes(defIngr, ingrNum) {
     const params = {
         app_id: appId,
@@ -108,20 +105,19 @@ function unhappyResult() {
     $('#i-recipes').removeClass('hidden');
 }
 
-//When form on index page is submitted, do this
+//When "Let's eat!" button is clicked, ...
 function watchLetsEat() {
     $('.everything').on("submit", "#i-form", event => {
         event.preventDefault();
         console.log('watchIndexForm ran');
+        //...take the values from the "ingredient I have" input...
         const defIngr = $('#i-def-ingr').val();
+        //...and the "number of ingredients I'll use" input...
         const ingrNum = $('#i-ingr-num').val();
-    //make both fields required or else account for not having an ingredient num value
-        if (defIngr.length === 0 || ingrNum === 0) {
-            unhappyResult();
-        } else {
-            getRecipes(defIngr, ingrNum);
-        }
-    })
+        console.log(ingrNum)
+        //access Edamam API to get recipes
+        getRecipes(defIngr, ingrNum);
+        })
 }
 
 function watchLetsMakeIt() {
@@ -137,26 +133,6 @@ function watchLetsMakeIt() {
         location = "#";
     })
 }
-
-// function populateJRPage() {
-//     // const [title, ingredients, src, num, link] = decodeURIComponent(window.location.search.substr(1)
-//     //         .replaceAll("+", " "))
-//     //         .split('&')
-//     //         .map(part => part.split("=")[1])
-//     // $('.jr-recipe-title').html(`${title}`);
-//     // $('.jr-ingr-num').html(`${num} ingredients`);
-//     // $('.jr-recipe-img').html(`<img src="${src}" alt="recipe image">`);
-//     // $('.jr-recipe-box').append(`<iframe id="jr-recipe"
-//     // title="Your recipe"
-//     // width="100%"
-//     // height="800px"
-//     // src="${link}"></iframe>`)
-//     let title = $(this).closest("form").find("input[name=title]").val();
-//     let src = $("input[name=src]").val();
-//     let num = $("input[name=num]").val();
-//     let link = $("input[name=link]").val();
-//     holdRecipeHTML(src, title, num, link);
-// }
 
 function holdRecipeHTML(src, title, num, link) {
     const html= `<div class="jr-group">
@@ -188,10 +164,6 @@ function holdRecipeHTML(src, title, num, link) {
     $(".everything").append(html);
 }
 
-
-//$("body").css("cursor", "progress");.
-
-
 function watchNewParams() {
     $(".everything").on("submit", ".new-params", event => {
         event.preventDefault();
@@ -206,6 +178,7 @@ function onPageLoad() {
     watchNewParams();
 }
 
+//When the page loads, run the above functions
 $(onPageLoad)
 
 
