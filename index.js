@@ -159,7 +159,9 @@ function holdRecipeHTML(src, title, num, link) {
     </div>
     <section>
         <div class="jr-recipe-box">
-            <iframe id="jr-recipe"
+            <iframe 
+                sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                id="jr-recipe"
                 title="Your recipe"
                 width="100%"
                 height="800px"
