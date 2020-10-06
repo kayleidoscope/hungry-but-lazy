@@ -24,8 +24,10 @@ function holdIndexHTML() {
     </div>`
 }
 
-function renderIndex() {
+function renderIndex(hideRecipes) {
+    console.log("renderIndex ran")
     $(".everything").empty();
+    if (hideRecipes) $("#i-recipes").addClass("hidden");
     $(".everything").append(holdIndexHTML());
 }
 
@@ -59,7 +61,7 @@ function displayRecipes(responseJson) {
                 responseJson.hits[i].recipe.ingredientLines.map(item =>
                     `<li>${item}</li>`).join("")}</ol>
             <form class="i-lets-make-it">
-                <a href="#top-of-page"><input type="submit" value="Let's make it!"/></a>
+                <input type="submit" value="Let's make it!"/>
                 <input type="hidden" name="title" value="${responseJson.hits[i].recipe.label}">
                 <input type="hidden" name="ingredients" value="${responseJson.hits[i].recipe.ingredientLines}">
                 <input type="hidden" name="src" value="${responseJson.hits[i].recipe.image}">
@@ -108,7 +110,7 @@ function unhappyResult() {
 
 //When form on index page is submitted, do this
 function watchLetsEat() {
-    $('#i-form').submit(event => {
+    $('.everything').on("submit", "#i-form", event => {
         event.preventDefault();
         console.log('watchIndexForm ran');
         const defIngr = $('#i-def-ingr').val();
@@ -132,6 +134,7 @@ function watchLetsMakeIt() {
         let num = $(event.target).closest(".i-lets-make-it").find('input[name="num"]').val();
         let link = $(event.target).closest(".i-lets-make-it").find('input[name="link"]').val();
         holdRecipeHTML(src, title, num, link);
+        location = "#";
     })
 }
 
@@ -163,8 +166,12 @@ function holdRecipeHTML(src, title, num, link) {
             <div>
                 <h2>${title}</h2>
                 <span>${num} ingredients</span>
-                <button href="#i-recipes">Choose new recipe</button>
-                <button class="new-params">Set different parameters</button>
+                <form class="new-params">
+                    <input type="submit" value="Set different parameters">
+                </form>
+                <form>
+                    <input type="submit" formaction="#i-recipes" value="Choose different recipe"t>
+                </form>
         </div>
     </div>
     <section>
@@ -182,16 +189,21 @@ function holdRecipeHTML(src, title, num, link) {
 }
 
 
+//$("body").css("cursor", "progress");.
+
+
 function watchNewParams() {
     $(".everything").on("submit", ".new-params", event => {
-        renderIndex();
+        event.preventDefault();
+        renderIndex(true);
     })
 }
 
 function onPageLoad() {
-    renderIndex();
+    renderIndex(false);
     watchLetsEat();
     watchLetsMakeIt();
+    watchNewParams();
 }
 
 $(onPageLoad)
