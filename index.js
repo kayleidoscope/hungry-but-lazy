@@ -4,40 +4,30 @@ const appId = "b4955748";
 const appKey = "465177a917ad855574dcacd25dca179a";
 const baseURL = "https://api.edamam.com/search";
 
-let subBox2 = `<div>
-    <p>No [input], huh?</p>
-    <p>Choose your substitute</p>
-    <form>
-        <input type="radio" id="sub-food" name="sub-food"><label for="sub-food">sub</label>
-        <input type="submit" value="Sub!">
-    </form>
-</div>`
-
-let subBox3 = `<div class="subBox3">
-    <p>My subs:</p>
-    <ul>
-        <li>INPUT > SUB</li>
-    </ul>
-    <p>Sub more?</p>
-    <form>
-        <label for="sub">I don't want </label><input type="text" id="sub" name="sub">
-        <input type="submit" value="Sub!">
-    </form>
-    <input type="submit" value="Nope, I'm good!"">
-</div>`
-
-let subBox4 = `<div class="subBox4">
-    <p>My subs:</p>
-    <ul>
-        <li>INPUT to SUB</li>
-    </ul>
-    <input type="submit" value="Sub into recipe">
-    <input type="submit" value="Modify sub list">
-</div>`
-
 //User stories
 
 //I want to find recipes based on number of ingredients and time
+
+function holdIndexHTML() {
+    return `
+    <p>Welcome to Hungry but Lazy!</p>
+    <p>This site aims to help you find recipes when you're super hungry and don't feel like putting in a lot of effort.</p>
+    <p>To get started, use the form below to name an ingredient you know you definitely have in your kitchen and a max number of ingredients.</p>
+    <div class="i-parameters">
+        <p>Choose your parameters!</p>
+        <form id="i-form">
+            <input type="text" id="i-def-ingr" name="def-ingredient"><label for="def-ingredient"> is an ingredient I definitely have.</label><br>
+            <input type="number" id="i-ingr-num" name="ingredients"><label for="ingredients"> is the number of ingredients I'm willing to use.</label><br>
+            <input type="submit" value="Let's eat!">
+            <p id="js-error-message"></p>
+        </form>
+    </div>`
+}
+
+function renderIndex() {
+    $(".everything").empty();
+    $(".everything").append(holdIndexHTML());
+}
 
 function formatQueryParams(params) {
     console.log('formatQueryParams ran');
@@ -173,6 +163,8 @@ function holdRecipeHTML(src, title, num, link) {
             <div>
                 <h2>${title}</h2>
                 <span>${num} ingredients</span>
+                <button href="#i-recipes">Choose new recipe</button>
+                <button class="new-params">Set different parameters</button>
         </div>
     </div>
     <section>
@@ -189,21 +181,17 @@ function holdRecipeHTML(src, title, num, link) {
     $(".everything").append(html);
 }
 
-function watchSubLogSubmit() {
-    $(".everything").on("submit", ".add-sub", function(event) {
-        event.preventDefault();
-        console.log('watchSubLogSubmit ran');
-        // const haveNot = $("#have-not").val();
-        // const have = $("#have").val();
-        // console.log(haveNot);
-        // console.log(have);
+
+function watchNewParams() {
+    $(".everything").on("submit", ".new-params", event => {
+        renderIndex();
     })
 }
 
 function onPageLoad() {
+    renderIndex();
     watchLetsEat();
     watchLetsMakeIt();
-    watchSubLogSubmit();
 }
 
 $(onPageLoad)
