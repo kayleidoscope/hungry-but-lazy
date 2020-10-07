@@ -7,19 +7,23 @@ const baseURL = "https://api.edamam.com/search";
 //returns starting HTML when called
 function holdIndexHTML() {
     return `
-    <p>Welcome to Hungry but Lazy!</p>
-    <p>This site aims to help you find recipes when you're super hungry and don't feel like putting in a lot of effort.</p>
-    <p>To get started, use the form below to name an ingredient you know you definitely have in your kitchen and a max number of ingredients.</p>
-    <div class="i-parameters">
-        <p>Choose your parameters!</p>
-        <form id="i-form">
-            <input type="text" id="i-def-ingr" name="def-ingredient" required><label for="def-ingredient"> is an ingredient I definitely have.</label><br>
-            <input type="number" id="i-ingr-num" name="ingredients" required><label for="ingredients"> is the number of ingredients I'm willing to use.</label><br>
-            <input type="submit" value="Let's eat!">
-            <p id="js-error-message"></p>
-        </form>
-    </div>`
+`
 }
+
+function holdStepOneHTML() {
+    return `<div class="i-parameters">
+    <p>To get started, use this form to name an ingredient you know you definitely have in your kitchen and a max number of ingredients.</p>
+    <form id="i-form">
+        <input type="text" id="i-def-ingr" name="def-ingredient" required><label for="def-ingredient"> is an ingredient I definitely have.</label><br>
+        <input type="number" id="i-ingr-num" name="ingredients" required><label for="ingredients"> is the number of ingredients I'm willing to use.</label><br>
+        <input type="submit" value="Find a recipe!">
+    </form>
+</div>`
+}
+
+
+
+
 
 //render starting HTML, whether at page load or when directed from recipe page
 function renderIndex(hideRecipes) {
@@ -29,6 +33,11 @@ function renderIndex(hideRecipes) {
     if (hideRecipes) $("#i-recipes").addClass("hidden");
     $(".everything").append(holdIndexHTML());
 }
+
+function renderStepOne() {
+    $("#step-one").append(holdStepOneHTML())
+}
+
 
 function formatQueryParams(params) {
     console.log('formatQueryParams ran');
@@ -108,9 +117,9 @@ function unhappyResult() {
     $('#i-recipes').removeClass('hidden');
 }
 
-//When "Let's eat!" button is clicked, ...
-function watchLetsEat() {
-    $('.everything').on("submit", "#i-form", event => {
+//When "Find a recipe!" button is clicked, ...
+function watchFindARecipe() {
+    $('#step-one').on("submit", "#i-form", event => {
         event.preventDefault();
         console.log('watchIndexForm ran');
         //...take the values from the "ingredient I have" input...
@@ -129,47 +138,43 @@ function watchLetsMakeIt() {
     $('#i-recipes').on('submit', event => {
         event.preventDefault();
         console.log('watchLetsMakeIt ran');
+        $(".everything").removeClass("hidden");
         $(".everything").empty();
         let title = $(event.target).closest(".i-lets-make-it").find('input[name="title"]').val();
         let src = $(event.target).closest(".i-lets-make-it").find('input[name="src"]').val();
         let num = $(event.target).closest(".i-lets-make-it").find('input[name="num"]').val();
         let link = $(event.target).closest(".i-lets-make-it").find('input[name="link"]').val();
-        holdRecipeHTML(src, title, num, link);
+        let ol = $(event.target).closest(".recipe-item").find(".i-my-ingrs").html();
+        console.log(ol);
+        holdRecipeHTML(src, title, num, link, ol);
         //whenever this button is clicked, send us to top of page
         location = "#";
     })
 }
 
+function watchSeeAll() {
+    $(".everything").on("submit", ".see-all-again", event => {
+        event.preventDefault();
+        $('#i-recipes').toggleClass("hidden");
+        $(".everything").toggleClass("hidden");
+    })
+}
+
 //This is the HTML that creates the appropriate recipe page
-function holdRecipeHTML(src, title, num, link) {
-    const html= `<div class="jr-group">
-            <div class="jr-recipe-img">
-                <img src="${src}" alt="recipe image">
-            </div>
-            <div>
-                <h2>${title}</h2>
-                <span>${num} ingredients</span>
-                <form class="new-params">
-                    <input type="submit" value="Set different parameters">
-                </form>
-                <form>
-                    <input type="submit" formaction="#i-recipes" value="Choose different recipe"t>
-                </form>
-        </div>
+function holdRecipeHTML(src, title, num, link, ol) {
+    const html= `<li class="i-recipe-group">
+    <div class="recipe-item">
+        <h3 class="i-my-recipe">${title}</h3>
+        <h4 class="i-ingrs-num">${num} ingredients</h4>
+        <ol class="ingr-list i-my-ingrs">${ol}</ol>
+        <a href="${link}">Link to recipe page</a>
+        <form class="see-all-again">
+            <input type="submit" value="See all recipes again"/>
+        </form>
     </div>
-    <section>
-        <div class="jr-recipe-box">
-            <iframe 
-                sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-                id="jr-recipe"
-                title="Your recipe"
-                width="100%"
-                height="800px"
-                src="${link}">
-            </iframe>
-        </div>
-    </section>`
-    $('.everything').empty();
+    <div class="square"><img src="${src}" alt="recipe image"/></div>
+</li>`
+    $('#i-recipes').toggleClass("hidden");
     $(".everything").append(html);
 }
 
@@ -182,9 +187,11 @@ function watchNewParams() {
 }
 
 function onPageLoad() {
+    renderStepOne();
     renderIndex(false);
-    watchLetsEat();
+    watchFindARecipe();
     watchLetsMakeIt();
+    watchSeeAll();
     watchNewParams();
 }
 
