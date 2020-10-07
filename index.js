@@ -148,9 +148,14 @@ function watchLetsMakeIt() {
         let ol = $(event.target).closest(".recipe-item").find(".i-my-ingrs").html();
         console.log(ol);
         holdRecipeHTML(src, title, num, link, ol);
+        handleLink(link);
         //whenever this button is clicked, send us to top of page
         location = "#";
     })
+}
+
+function handleLink(link) {
+    $(".your-recipe").append(`<a href="${link}">${link}</a>`);
 }
 
 function watchSeeAll() {
@@ -175,7 +180,7 @@ function holdRecipeHTML(src, title, num, link, ol) {
         <h3 class="i-my-recipe">${title}</h3>
         <h4 class="i-ingrs-num">${num} ingredients</h4>
         <ol class="ingr-list i-my-ingrs">${ol}</ol>
-        <a href="${link}">Link to recipe page</a>
+        <a href="${link}" target="_blank">Link to recipe page</a>
         <form class="see-all-again">
             <input type="submit" value="See all recipes again"/>
         </form>
@@ -189,13 +194,26 @@ function holdRecipeHTML(src, title, num, link, ol) {
     $(".everything").append(html);
 }
 
-//when this button is clicked, make the page look like it did on page load
-function watchNewParams() {
-    $(".everything").on("submit", ".new-params", event => {
-        event.preventDefault();
-        renderIndex(true);
-    })
+// ----------SPOTIFY----------
+
+const token = "Bearer BQD7twEcgnYjnBM_WIs-Nr7NTABVrmGkwzn4knVOdXgVRxCa3S7T7CTtaHuHmIyT9jKBv4zSzcR4vi8bpxOvxC4atDZrh3ZUhnBUNadXdjkafpo58ysbk32RFZHXRypWv7bWzrC-CqSZSBSokO7tPKoada7v3GmyeaI"
+
+function getPlaylists() {
+    const spotURL = "https://api.spotify.com/v1/browse/categories/dinner/playlists";
+
+    const options = {
+        headers: new Headers({
+            "Authorization": token
+        })
+    };
+
+    fetch(spotURL, options)
+        .then(response => response.json())
+        .then(responseJson => console.log(responseJson));
 }
+
+
+
 
 function onPageLoad() {
     renderStepOne();
@@ -204,7 +222,7 @@ function onPageLoad() {
     watchLetsMakeIt();
     watchSeeAll();
     watchSetNewParams()
-    watchNewParams();
+    getPlaylists();
 }
 
 //When the page loads, run the above functions
