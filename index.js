@@ -140,6 +140,7 @@ function watchLetsMakeIt() {
         console.log('watchLetsMakeIt ran');
         $(".everything").removeClass("hidden");
         $(".everything").empty();
+        $(".i-parameters").addClass("hidden");
         let title = $(event.target).closest(".i-lets-make-it").find('input[name="title"]').val();
         let src = $(event.target).closest(".i-lets-make-it").find('input[name="src"]').val();
         let num = $(event.target).closest(".i-lets-make-it").find('input[name="num"]').val();
@@ -160,6 +161,13 @@ function watchSeeAll() {
     })
 }
 
+function watchSetNewParams() {
+    $(".everything").on("submit", ".set-new-params", event => {
+        event.preventDefault();
+        $(".i-parameters").toggleClass("hidden");
+    })
+}
+
 //This is the HTML that creates the appropriate recipe page
 function holdRecipeHTML(src, title, num, link, ol) {
     const html= `<li class="i-recipe-group">
@@ -171,6 +179,9 @@ function holdRecipeHTML(src, title, num, link, ol) {
         <form class="see-all-again">
             <input type="submit" value="See all recipes again"/>
         </form>
+        <form class="set-new-params">
+        <input type="submit" value="Toggle parameters box"/>
+    </form>
     </div>
     <div class="square"><img src="${src}" alt="recipe image"/></div>
 </li>`
@@ -192,6 +203,7 @@ function onPageLoad() {
     watchFindARecipe();
     watchLetsMakeIt();
     watchSeeAll();
+    watchSetNewParams()
     watchNewParams();
 }
 
