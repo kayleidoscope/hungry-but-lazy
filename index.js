@@ -206,7 +206,7 @@ function holdDetailsFormHTML() {
         <input type="radio" name="platform" id="facebook" value="Facebook"><label for="facebook">Facebook</label><br>
         <input type="radio" name="platform" id="skype" value="Skype"><label for="skype">Skype</label><br>
         <input type="radio" name="platform" id="facetime" value="FaceTime"><label for="facetime">FaceTime</label><br>
-        <input type="radio" name="platform" id="WhatsApp" value="WhatsApp"><label for="whatsapp">WhatsApp</label><br>
+        <input type="radio" name="platform" id="whatsapp" value="WhatsApp"><label for="whatsapp">WhatsApp</label><br>
         <input type="radio" name="platform" id="other"><label for="other">Other</label> <input type="text" class="other" value=" " required><br>
     </div>
     <input type="submit" value="Submit">
@@ -214,7 +214,10 @@ function holdDetailsFormHTML() {
 }
 
 function holdSetDetailsHTML(date, time, platform) {
-    return `<p>Your party will be on ${date} at ${time} using ${platform}.</p>`
+    return `<p>Your party will be on ${date} at ${time} using ${platform}.</p>
+    <form id="new-details">
+        <input type="submit" value="Choose new details?">
+    </form>`
 }
 
 function renderDetailsForm() {
@@ -230,6 +233,7 @@ function handleDetailsSubmit() {
         if ($("input[id=other]").is(":checked")) {
             platform = $(".other").val();
         }
+        $(".event-details").empty();
         $(".event-details").append(holdSetDetailsHTML(date, time, platform));
         $(".3-time").empty();
         $(".3-time").append(time);
@@ -240,6 +244,13 @@ function handleDetailsSubmit() {
     })
 }
 
+function handleNewDetailsSubmit() {
+    $(".event-details").on("submit", "#new-details", event => {
+        event.preventDefault();
+        $(".event-details").empty();
+        renderDetailsForm();
+    })}
+
 function onPageLoad() {
     renderStepOne();
     renderIndex(false);
@@ -249,6 +260,7 @@ function onPageLoad() {
     watchSetNewParams();
     renderDetailsForm();
     handleDetailsSubmit();
+    handleNewDetailsSubmit();
 }
 
 //When the page loads, run the above functions
