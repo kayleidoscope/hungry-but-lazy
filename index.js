@@ -21,10 +21,6 @@ function holdStepOneHTML() {
 </div>`
 }
 
-
-
-
-
 //render starting HTML, whether at page load or when directed from recipe page
 function renderIndex(hideRecipes) {
     console.log("renderIndex ran")
@@ -195,24 +191,38 @@ function holdRecipeHTML(src, title, num, link, ol) {
 }
 
 // ----------SPOTIFY----------
+const clientId = "325361f0d57f40e2ba8d98538371c95d";
+const clientSecret = "078f0668915b428ca5bc1fbe6e355ba1";
+const baseTokenURL = "https://accounts.spotify.com/authorize";
 
-const token = "Bearer BQD7twEcgnYjnBM_WIs-Nr7NTABVrmGkwzn4knVOdXgVRxCa3S7T7CTtaHuHmIyT9jKBv4zSzcR4vi8bpxOvxC4atDZrh3ZUhnBUNadXdjkafpo58ysbk32RFZHXRypWv7bWzrC-CqSZSBSokO7tPKoada7v3GmyeaI"
+function getToken() {
+    const tokenParams = {
+        client_id: clientId,
+        response_type: "token",
+        redirect_uri: "https://kayleidoscope.github.io/hungry-but-lazy/",
+    }
 
-function getPlaylists() {
-    const spotURL = "https://api.spotify.com/v1/browse/categories/dinner/playlists";
-
-    const options = {
+    const tokenOptions = {
         headers: new Headers({
-            "Authorization": token
+            "Access-Control-Allow-Origin": "https://kayleidoscope.github.io/hungry-but-lazy/",
         })
-    };
+    }
 
-    fetch(spotURL, options)
-        .then(response => response.json())
+    const tokenQueryString = formatQueryParams(tokenParams);
+
+    const tokenUrl = baseTokenURL + '?' + tokenQueryString;
+
+    console.log(tokenUrl)
+
+    fetch(tokenUrl, tokenOptions)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error(response.statusText);
+        })
         .then(responseJson => console.log(responseJson));
 }
-
-
 
 
 function onPageLoad() {
@@ -222,7 +232,7 @@ function onPageLoad() {
     watchLetsMakeIt();
     watchSeeAll();
     watchSetNewParams()
-    getPlaylists();
+    getToken();
 }
 
 //When the page loads, run the above functions
