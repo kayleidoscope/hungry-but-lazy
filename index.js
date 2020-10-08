@@ -12,7 +12,7 @@ function holdIndexHTML() {
 
 function holdStepOneHTML() {
     return `<div class="i-parameters">
-    <p>To get started, use this form to name an ingredient you know you definitely have in your kitchen and a max number of ingredients.</p>
+    <p>To get started, use this form to name an ingredient you think all your guests will definitely have in your kitchen and a max number of ingredients you want the recipe to have.</p>
     <form id="i-form">
         <input type="text" id="i-def-ingr" name="def-ingredient" required><label for="def-ingredient"> is an ingredient I definitely have.</label><br>
         <input type="number" id="i-ingr-num" name="ingredients" required><label for="ingredients"> is the number of ingredients I'm willing to use.</label><br>
@@ -144,6 +144,12 @@ function watchLetsMakeIt() {
         let ol = $(event.target).closest(".recipe-item").find(".i-my-ingrs").html();
         console.log(ol);
         holdRecipeHTML(src, title, num, link, ol);
+        $(".to-eat").empty();
+        $(".to-eat").append(title);
+        $(".to-use").empty();
+        $(".to-use").append(`<a href="${link}">${link}</a>`);
+        $(".to-have").empty();
+        $(".to-have").append(ol);
         handleLink(link);
         //whenever this button is clicked, send us to top of page
         location = "#";
@@ -190,40 +196,49 @@ function holdRecipeHTML(src, title, num, link, ol) {
     $(".everything").append(html);
 }
 
-// ----------SPOTIFY----------
-const clientId = "325361f0d57f40e2ba8d98538371c95d";
-const clientSecret = "078f0668915b428ca5bc1fbe6e355ba1";
-const baseTokenURL = "https://accounts.spotify.com/authorize";
-
-function getToken() {
-    const tokenParams = {
-        client_id: clientId,
-        response_type: "token",
-        redirect_uri: "https://kayleidoscope.github.io/hungry-but-lazy/",
-    }
-
-    const tokenOptions = {
-        headers: new Headers({
-            "Access-Control-Allow-Origin": "https://kayleidoscope.github.io/hungry-but-lazy/",
-        })
-    }
-
-    const tokenQueryString = formatQueryParams(tokenParams);
-
-    const tokenUrl = baseTokenURL + '?' + tokenQueryString;
-
-    console.log(tokenUrl)
-
-    fetch(tokenUrl, tokenOptions)
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error(response.statusText);
-        })
-        .then(responseJson => console.log(responseJson));
+function holdDetailsFormHTML() {
+    return `    <form id="details">
+    <label for="date">Date: </label><input type="date" name="date" id="details-date" required><br>
+    <label for="time">Time: </label><input type="time" name="time" id="details-time" required><br>
+    <label for="platform">Videochat platform: </label>
+    <div id="details-platform">
+        <input type="radio" name="platform" id="zoom" value="Zoom"><label for="zoom">Zoom</label><br>
+        <input type="radio" name="platform" id="facebook" value="Facebook"><label for="facebook">Facebook</label><br>
+        <input type="radio" name="platform" id="skype" value="Skype"><label for="skype">Skype</label><br>
+        <input type="radio" name="platform" id="facetime" value="FaceTime"><label for="facetime">FaceTime</label><br>
+        <input type="radio" name="platform" id="WhatsApp" value="WhatsApp"><label for="whatsapp">WhatsApp</label><br>
+        <input type="radio" name="platform" id="other"><label for="other">Other</label> <input type="text" class="other" value=" " required><br>
+    </div>
+    <input type="submit" value="Submit">
+</form>`
 }
 
+function holdSetDetailsHTML(date, time, platform) {
+    return `<p>Your party will be on ${date} at ${time} using ${platform}.</p>`
+}
+
+function renderDetailsForm() {
+    $(".event-details").append(holdDetailsFormHTML());
+}
+
+function handleDetailsSubmit() {
+    $(".event-details").on("submit", "#details", event => {
+        event.preventDefault();
+        let date = $("#details-date").val();
+        let time = $("#details-time").val();
+        let platform = $("input:checked").val();
+        if ($("input[id=other]").is(":checked")) {
+            platform = $(".other").val();
+        }
+        $(".event-details").append(holdSetDetailsHTML(date, time, platform));
+        $(".3-time").empty();
+        $(".3-time").append(time);
+        $(".3-date").empty();
+        $(".3-date").append(date);
+        $(".to-meet").empty();
+        $(".to-meet").append(platform);
+    })
+}
 
 function onPageLoad() {
     renderStepOne();
@@ -231,8 +246,9 @@ function onPageLoad() {
     watchFindARecipe();
     watchLetsMakeIt();
     watchSeeAll();
-    watchSetNewParams()
-    getToken();
+    watchSetNewParams();
+    renderDetailsForm();
+    handleDetailsSubmit();
 }
 
 //When the page loads, run the above functions

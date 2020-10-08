@@ -3,7 +3,7 @@
 }
 
 body {
-    margin: 0;
+    //margin: 0;
 }
 
 .i-parameters {
@@ -63,6 +63,10 @@ footer {
     display: flex;
     flex-direction: row;
 } */
+
+.your-message {
+    background-color: lightsteelblue;
+}
 
 .jr-recipe-box {
     width: 90%;
