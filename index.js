@@ -198,8 +198,8 @@ function holdRecipeHTML(src, title, num, link, ol) {
 
 function holdDetailsFormHTML() {
     return `    <form id="details">
-    <label for="date">Date: </label><input type="date" name="date" id="details-date" required><br>
-    <label for="time">Time: </label><input type="time" name="time" id="details-time" required><br>
+    <label for="details-date">Date: </label><input type="date" name="date" id="details-date" required><br>
+    <label for="details-time">Time: </label><input type="time" name="time" id="details-time" required><br>
     <label for="platform">Videochat platform: </label>
     <div id="details-platform">
         <input type="radio" name="platform" id="zoom" value="Zoom"><label for="zoom">Zoom</label><br>
