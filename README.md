@@ -1,4 +1,4 @@
-# hungry-but-lazy
+# Social Distance Party!
 
 Hungry But Lazy has been rebranded as Social Distance Party!
 
