@@ -202,7 +202,7 @@ function holdDetailsFormHTML() {
     <label for="details-time">Time: </label><input type="time" name="time" id="details-time" required><br>
 
     <fieldset id="details-platform">
-    <label for="platform">Videochat platform: </label><br>
+    <legend for="platform">Videochat platform: </legend>
         <input type="radio" name="platform" id="zoom" value="Zoom"><label for="zoom">Zoom</label><br>
         <input type="radio" name="platform" id="facebook" value="Facebook"><label for="facebook">Facebook</label><br>
         <input type="radio" name="platform" id="skype" value="Skype"><label for="skype">Skype</label><br>
