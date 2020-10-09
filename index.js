@@ -14,8 +14,8 @@ function holdStepOneHTML() {
     return `<div class="i-parameters">
     <p>To get started, use this form to name an ingredient you think all your guests will definitely have in your kitchen and a max number of ingredients you want the recipe to have.</p>
     <form id="i-form">
-        <input type="text" id="i-def-ingr" name="def-ingredient" required><label for="def-ingredient"> is an ingredient we all have.</label><br>
-        <input type="number" id="i-ingr-num" name="ingredients" required><label for="ingredients"> is the max number of ingredients we want to use.</label><br>
+        <input type="text" id="i-def-ingr" name="def-ingredient" required><label for="i-def-ingr"> is an ingredient we all have.</label><br>
+        <input type="number" id="i-ingr-num" name="ingredients" required><label for="i-ingr-num"> is the max number of ingredients we want to use.</label><br>
         <input type="submit" value="Find a recipe!">
     </form>
 </div>`
