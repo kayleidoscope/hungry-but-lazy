@@ -200,15 +200,16 @@ function holdDetailsFormHTML() {
     return `    <form id="details">
     <label for="details-date">Date: </label><input type="date" name="date" id="details-date" required><br>
     <label for="details-time">Time: </label><input type="time" name="time" id="details-time" required><br>
-    <label for="platform">Videochat platform: </label>
-    <div id="details-platform">
+
+    <fieldset id="details-platform">
+    <label for="platform">Videochat platform: </label><br>
         <input type="radio" name="platform" id="zoom" value="Zoom"><label for="zoom">Zoom</label><br>
         <input type="radio" name="platform" id="facebook" value="Facebook"><label for="facebook">Facebook</label><br>
         <input type="radio" name="platform" id="skype" value="Skype"><label for="skype">Skype</label><br>
         <input type="radio" name="platform" id="facetime" value="FaceTime"><label for="facetime">FaceTime</label><br>
         <input type="radio" name="platform" id="whatsapp" value="WhatsApp"><label for="whatsapp">WhatsApp</label><br>
         <input type="radio" name="platform" id="other"><label for="other">Other</label> <input type="text" class="other" value=" " required><br>
-    </div>
+    </fieldset>
     <input type="submit" value="Submit">
 </form>`
 }
