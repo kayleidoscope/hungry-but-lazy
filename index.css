@@ -2,11 +2,8 @@
     display: none;
 }
 
-body {
-    //margin: 0;
-}
 
-.i-parameters {
+.parameters {
     background-color: lightgreen;
     margin: 10px auto;
     padding: 10px;
