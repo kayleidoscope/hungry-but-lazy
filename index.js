@@ -11,11 +11,11 @@ const baseURL = "https://api.edamam.com/search";
 function holdStepOneHTML() {
     console.log('holdStepOneHTML ran')
     return `<div class="parameters">
-    <p>To get started, use this form to name an ingredient you think all your guests will definitely have in your kitchen and a max number of ingredients you want the recipe to have.</p>
+    <p class="param-text">To get started, use this form to name an ingredient you think all your guests will definitely have in your kitchen and a max number of ingredients you want the recipe to have.</p>
     <form id="1-form">
         <input type="text" id="i-def-ingr" name="def-ingredient" required value="cheese"><label for="i-def-ingr"> is an ingredient we all have.</label><br>
         <input type="number" id="i-ingr-num" name="ingredients" required min="1" value="3"><label for="i-ingr-num"> is the max number of ingredients we want to use.</label><br>
-        <input type="submit" value="Find a recipe!">
+        <input type="submit" value="Find a recipe!" class="button">
     </form>
 </div>`
 }
@@ -25,14 +25,14 @@ function holdRecipeHTML(src, title, num, link, ol) {
     const html= `<li class="i-recipe-group">
         <div class="recipe-item">
             <h3 class="i-my-recipe">${title}</h3>
+            <a href="${link}" target="_blank">See full recipe</a>
             <h4 class="i-ingrs-num">${num} ingredients</h4>
             <ol class="ingr-list i-my-ingrs">${ol}</ol>
-            <a href="${link}" target="_blank">Link to recipe page</a>
             <form class="see-all-again">
-                <input type="submit" value="See all recipes again"/>
+                <input type="submit" value="See all recipes again" class="button"/>
             </form>
             <form class="set-new-params">
-            <input type="submit" value="Toggle parameters box"/>
+            <input type="submit" value="Toggle parameters box" class="button"/>
         </form>
         </div>
         <div class="square"><img src="${src}" alt="recipe image"/></div>
@@ -77,9 +77,9 @@ function holdDetailsFormHTML() {
         <option timeZoneId="27" gmtAdjustment="GMT-01:00" useDaylightTime="0" value="-1">(GMT-01:00) Cape Verde Is.</option>
         <option timeZoneId="28" gmtAdjustment="GMT-01:00" useDaylightTime="1" value="-1">(GMT-01:00) Azores</option>
         <option timeZoneId="29" gmtAdjustment="GMT+00:00" useDaylightTime="0" value="0">(GMT+00:00) Casablanca, Monrovia, Reykjavik</option>
-        <option timeZoneId="30" gmtAdjustment="GMT+00:00" useDaylightTime="1" value="0">(GMT+00:00) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London</option>
-        <option timeZoneId="31" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna</option>
-        <option timeZoneId="32" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague</option>
+        <option timeZoneId="30" gmtAdjustment="GMT+00:00" useDaylightTime="1" value="0">(GMT+00:00) Greenwich Mean Time: London</option>
+        <option timeZoneId="31" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Amsterdam, Berlin, Rome, Vienna</option>
+        <option timeZoneId="32" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Belgrade, Budapest, Prague</option>
         <option timeZoneId="33" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Brussels, Copenhagen, Madrid, Paris</option>
         <option timeZoneId="34" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb</option>
         <option timeZoneId="35" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) West Central Africa</option>
@@ -88,7 +88,7 @@ function holdDetailsFormHTML() {
         <option timeZoneId="38" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Beirut</option>
         <option timeZoneId="39" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Cairo</option>
         <option timeZoneId="40" gmtAdjustment="GMT+02:00" useDaylightTime="0" value="2">(GMT+02:00) Harare, Pretoria</option>
-        <option timeZoneId="41" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius</option>
+        <option timeZoneId="41" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn</option>
         <option timeZoneId="42" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Jerusalem</option>
         <option timeZoneId="43" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Minsk</option>
         <option timeZoneId="44" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Windhoek</option>
@@ -126,7 +126,7 @@ function holdDetailsFormHTML() {
         <option timeZoneId="76" gmtAdjustment="GMT+10:00" useDaylightTime="1" value="10">(GMT+10:00) Hobart</option>
         <option timeZoneId="77" gmtAdjustment="GMT+10:00" useDaylightTime="0" value="10">(GMT+10:00) Guam, Port Moresby</option>
         <option timeZoneId="78" gmtAdjustment="GMT+10:00" useDaylightTime="1" value="10">(GMT+10:00) Vladivostok</option>
-        <option timeZoneId="79" gmtAdjustment="GMT+11:00" useDaylightTime="1" value="11">(GMT+11:00) Magadan, Solomon Is., New Caledonia</option>
+        <option timeZoneId="79" gmtAdjustment="GMT+11:00" useDaylightTime="1" value="11">(GMT+11:00) Solomon Is., New Caledonia</option>
         <option timeZoneId="80" gmtAdjustment="GMT+12:00" useDaylightTime="1" value="12">(GMT+12:00) Auckland, Wellington</option>
         <option timeZoneId="81" gmtAdjustment="GMT+12:00" useDaylightTime="0" value="12">(GMT+12:00) Fiji, Kamchatka, Marshall Is.</option>
         <option timeZoneId="82" gmtAdjustment="GMT+13:00" useDaylightTime="0" value="13">(GMT+13:00) Nuku'alofa</option>
@@ -140,7 +140,7 @@ function holdDetailsFormHTML() {
         <input type="radio" name="platform" id="whatsapp" value="WhatsApp"><label for="whatsapp">WhatsApp</label><br>
         <input type="radio" name="platform" id="other"><label for="other">Other</label> <input type="text" class="other" value=" " required><br>
     </fieldset>
-    <input type="submit" value="Submit">
+    <input type="submit" value="Submit" class="button">
 </form>`
 }
 
@@ -150,7 +150,7 @@ function holdDetailsFormHTML() {
 function holdSetDetailsHTML(date, time, platform) {
     return `<p class="party-sentence">Your party will be on ${date} at ${time} using ${platform}.</p>
     <form id="new-details">
-        <input type="submit" value="Choose new details?">
+        <input type="submit" value="Choose new details?" class="button">
     </form>`
 }
 
@@ -187,12 +187,12 @@ function displayRecipes(responseJson) {
     }
     console.log(responseJson);
     //if there are results, remove them
-    $('#1-recipes-list').empty();
+    $('#i-recipes-list').empty();
     //iterate through recipes array and put the appropriate strings in the
     //appropriate places
     for (let i = 0; i < responseJson.hits.length; i++) {
-        $('#1-recipes-list').append(`<li class="i-recipe-group">
-        <div class="recipe-item">
+        $('#i-recipes-list').append(`<li class="i-recipe-group">
+        <div class="recipe-item recipe-list-item">
             <h3 class="i-my-recipe">${responseJson.hits[i].recipe.label}</h3>
             <h4 class="i-ingrs-num">${responseJson.hits[i].recipe.ingredientLines.length} ingredients</h4>
             <ol class="ingr-list-${i} i-my-ingrs">${
@@ -200,7 +200,7 @@ function displayRecipes(responseJson) {
                 responseJson.hits[i].recipe.ingredientLines.map(item =>
                     `<li>${item}</li>`).join("")}</ol>
             <form class="i-lets-make-it">
-                <input type="submit" value="Let's make it!"/>
+                <input type="submit" value="Let's make it!" class="button"/>
                 <input type="hidden" name="title" value="${responseJson.hits[i].recipe.label}">
                 <input type="hidden" name="ingredients" value="${responseJson.hits[i].recipe.ingredientLines}">
                 <input type="hidden" name="src" value="${responseJson.hits[i].recipe.image}">
@@ -241,7 +241,7 @@ function getRecipes(defIngr, ingrNum) {
 
 //if improper inputs are given, display the following HTML
 function unhappyResult() {
-    $('#1-recipes-list').empty();
+    $('#i-recipes-list').empty();
     $('.1-recipes-found').html(`No recipes found. Try a different ingredient or adjust the number of ingredients you want to use.`)
     $('#1-recipes').removeClass('hidden');
 }

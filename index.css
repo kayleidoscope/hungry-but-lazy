@@ -12,6 +12,11 @@ h1 {
     color: white;
 }
 
+section {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
 header {
     background-color: black;
 }
@@ -22,7 +27,23 @@ header img {
 }
 
 p, label, input, legend, a, span, li {
-    font-family: 'Open Sans', sans-serif;}
+    font-family: 'Open Sans', sans-serif;
+}
+
+.button {
+    height: 42px;
+    font-size: 15px;
+    background-color: black;
+    color: white;
+    border: none;
+    /* border-radius: 2em; */
+    margin: 10px auto auto auto;
+}
+
+.button:hover {
+    background-color: #3E3C3E;
+}
+
 
 .hidden {
     display: none;
@@ -31,9 +52,13 @@ p, label, input, legend, a, span, li {
 
 .parameters {
     background-color:#EBEAEB;
-    margin: 10px auto;
-    padding: 10px;
+    /* margin: 10px auto; */
+    padding: 8px;
     width: 275px;
+}
+
+.param-text {
+    margin: 0;
 }
 
 .square {
@@ -45,6 +70,21 @@ p, label, input, legend, a, span, li {
     max-width: 200px;
 }
 
+.i-my-recipe {
+    margin-bottom: 0px;
+}
+
+a {
+    color: #3D3D3D;
+    font-style: italic;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
 #i-recipes-list {
     list-style: none;
     padding-left: 0px;
@@ -53,7 +93,8 @@ p, label, input, legend, a, span, li {
 .i-recipe-group {
     display: flex;
     flex-direction: column;
-    background-color: #FFFEC2;
+    /* background-color: #B1FCF9; */
+    border: 8px solid;
     margin: 10px;
     padding: 15px;
 }
@@ -67,13 +108,13 @@ p, label, input, legend, a, span, li {
     width: 100%;
 }
 
-.jr-breakouts {
+/* .jr-breakouts {
     display: flex;
     flex-direction: column;
     background-color: lightgreen;
     padding: 10px;
     margin: 10px;
-}
+} */
 
 footer {
     color: #383838;
@@ -87,8 +128,19 @@ footer {
     flex-direction: row;
 } */
 
+select {
+    width: 100%;
+    max-width: 320px;
+}
+
 .your-message {
-    background-color: #FFFEC2;
+    background-color: #EBEAEB;
+    padding: 8px;
+}
+
+#details {
+    background-color: #EBEAEB;
+    padding: 8px;
 }
 
 .jr-recipe-box {
