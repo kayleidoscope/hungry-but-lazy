@@ -54,7 +54,7 @@ p, label, input, legend, a, span, li {
     background-color:#EBEAEB;
     /* margin: 10px auto; */
     padding: 8px;
-    width: 275px;
+    /* width: 275px; */
 }
 
 .param-text {
