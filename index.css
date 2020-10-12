@@ -1,14 +1,28 @@
+body {
+    margin: 0;
+}
+
 h1, h2 {
-    font-family: 'Staatliches', cursive;
+    font-family: 'Bungee', cursive;
 }
 
 h1 {
     text-align: center;
+    display: none;
+    color: white;
+}
+
+header {
+    background-color: black;
+}
+
+header img {
+    display: block;
+    margin: auto;
 }
 
 p, label, input, legend, a, span, li {
-    font-family: 'Raleway', sans-serif;
-}
+    font-family: 'Open Sans', sans-serif;}
 
 .hidden {
     display: none;
