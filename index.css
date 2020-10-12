@@ -1,3 +1,15 @@
+h1, h2 {
+    font-family: 'Staatliches', cursive;
+}
+
+h1 {
+    text-align: center;
+}
+
+p, label, input, legend, a, span, li {
+    font-family: 'Raleway', sans-serif;
+}
+
 .hidden {
     display: none;
 }
