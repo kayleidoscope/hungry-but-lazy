@@ -42,8 +42,12 @@ p, label, input, legend, a, span, li {
 
 .button:hover {
     background-color: #3E3C3E;
+    cursor: pointer;
 }
 
+cursor:hover {
+    cursor: pointer;
+}
 
 .hidden {
     display: none;

@@ -5,6 +5,11 @@ const appKey = "465177a917ad855574dcacd25dca179a";
 const baseURL = "https://api.edamam.com/search";
 
 
+let stepsStatus = {
+    "stepOne": false,
+    "stepTwo": false,
+}
+
 //-----HOLD HTML FUNCTIONS-----
 
 //returns starting HTML for Step One
@@ -14,7 +19,7 @@ function holdStepOneHTML() {
     <p class="param-text">To get started, use this form to name an ingredient you think all your guests will definitely have in your kitchen and a max number of ingredients you want the recipe to have.</p>
     <form id="1-form">
         <input type="text" id="i-def-ingr" name="def-ingredient" required value="cheese"><label for="i-def-ingr"> is an ingredient we all have.</label><br>
-        <input type="number" id="i-ingr-num" name="ingredients" required min="1" value="3"><label for="i-ingr-num"> is the max number of ingredients we want to use.</label><br>
+        <input type="number" id="i-ingr-num" name="ingredients" required min="1" max="15" value="3"><label for="i-ingr-num"> is the max number of ingredients we want to use.</label><br>
         <input type="submit" value="Find a recipe!" class="button">
     </form>
 </div>`
@@ -163,7 +168,8 @@ function renderStepOne() {
 
 //adds details form on Step Two to the page
 function renderDetailsForm() {
-    $(".event-details").append(holdDetailsFormHTML());
+    $(".event-details").append(holdDetailsFormHTML())
+    validateDate();
 }
 
 //-----EDAMAM API FUNCTIONS-----
@@ -258,6 +264,38 @@ function handleTimeZone(timeZone, timeZoneName) {
     }
 }
 
+function formatDateNicer(date) {
+    let splitDate = date.split("-");
+    let chosenYear = splitDate[0];
+    let chosenMonth = splitDate[1];
+    let chosenDay = parseInt(splitDate[2]);
+    if (chosenMonth == 1) {
+        return `January ${chosenDay}, ${chosenYear}`;
+    } else if (chosenMonth == 2) {
+        return `February ${chosenDay}, ${chosenYear}`;
+    } else if (chosenMonth == 3) {
+        return `March ${chosenDay}, ${chosenYear}`;
+    } else if (chosenMonth == 4) {
+        return `April ${chosenDay}, ${chosenYear}`;
+    } else if (chosenMonth == 5) {
+        return `May ${chosenDay}, ${chosenYear}`;
+    } else if (chosenMonth == 6) {
+        return `June ${chosenDay}, ${chosenYear}`;
+    } else if (chosenMonth == 7) {
+        return `July ${chosenDay}, ${chosenYear}`;
+    } else if (chosenMonth == 8) {
+        return `August ${chosenDay}, ${chosenYear}`;
+    } else if (chosenMonth == 9) {
+        return `September ${chosenDay}, ${chosenYear}`;
+    } else if (chosenMonth == 10) {
+        return `October ${chosenDay}, ${chosenYear}`;
+    } else if (chosenMonth == 11) {
+        return `November ${chosenDay}, ${chosenYear}`;
+    } else if (chosenMonth == 12) {
+        return `December ${chosenDay}, ${chosenYear}`;
+    }
+}
+
 function formatTimeNicer(time) {
     const splitTime = time.split(':');
     const hour = splitTime[0];
@@ -277,6 +315,28 @@ function formatTimeNicer(time) {
         return `${parsedHour}:${min} AM`;
     }
 }
+
+function validateSteps() {
+    if (stepsStatus.stepOne === true && stepsStatus.stepTwo === true) {
+        $(".your-message").removeClass("hidden");
+    }
+}
+
+function validateDate() {
+    const date = new Date();
+
+    let month = date.getMonth() +1;
+    let day = date.getDate();
+    const year = date.getFullYear();
+    if (month < 10) {
+        month = "0" + month;
+    }
+    if (day < 10) {
+        day = "0" + day.toString();
+    }
+    let maxDate = year + "-" + month + "-" + day;
+    $("#details-date").attr("min", maxDate);
+};
 
 //-----BUTTON FUNCTIONS-----
 
@@ -316,6 +376,9 @@ function watchLetsMakeIt() {
         $(".to-have").append(ol);
         //whenever this button is clicked, send us to top of page
         location = "#";
+        stepsStatus.stepOne = true;
+        console.log(stepsStatus);
+        validateSteps();
     })
 }
 
@@ -350,14 +413,16 @@ function handleDetailsSubmit() {
             platform = $(".other").val();
         }
         $(".event-details").empty();
-        $(".event-details").append(holdSetDetailsHTML(date, formatTimeNicer(time), platform));
+        $(".event-details").append(holdSetDetailsHTML(formatDateNicer(date), formatTimeNicer(time), platform));
         $(".3-time").empty();
         $(".3-time").append(formatTimeNicer(time));
         $(".3-date").empty();
-        $(".3-date").append(date);
+        $(".3-date").append(formatDateNicer(date));
         $(".to-meet").empty();
         $(".to-meet").append(platform);
         $(".party-sentence").append(handleTimeZone(timeZone, timeZoneName));
+        stepsStatus.stepTwo = true;
+        validateSteps();
     })
 }
 
