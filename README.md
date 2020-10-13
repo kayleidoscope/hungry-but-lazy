@@ -1,7 +1,7 @@
 # Social Distance Party!
 ------------------------
 
-Check out the app here: https://kayleidoscope.github.io/hungry-but-lazy/
+Check out the app here: https://kayleidoscope.github.io/social-distance-party/
 
 ## App summary
 
