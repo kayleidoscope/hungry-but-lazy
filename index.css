@@ -36,7 +36,6 @@ p, label, input, legend, a, span, li {
     background-color: black;
     color: white;
     border: none;
-    /* border-radius: 2em; */
     margin: 10px auto auto auto;
 }
 
@@ -56,9 +55,7 @@ cursor:hover {
 
 .parameters {
     background-color:#EBEAEB;
-    /* margin: 10px auto; */
     padding: 8px;
-    /* width: 275px; */
 }
 
 .param-text {
@@ -112,25 +109,12 @@ a:hover {
     width: 100%;
 }
 
-/* .jr-breakouts {
-    display: flex;
-    flex-direction: column;
-    background-color: lightgreen;
-    padding: 10px;
-    margin: 10px;
-} */
-
 footer {
     color: #383838;
     font-family: sans-serif;
     font-size: 12px;
     text-align: center;
 }
-
-/* .jr-top {
-    display: flex;
-    flex-direction: row;
-} */
 
 select {
     width: 100%;

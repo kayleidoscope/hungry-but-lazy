@@ -4,7 +4,9 @@ const appId = "b4955748";
 const appKey = "465177a917ad855574dcacd25dca179a";
 const baseURL = "https://api.edamam.com/search";
 
-
+//The values of these keys change when Step One and Step Two are completed.
+//In conjunction with the validateSteps() function, this causes Step Three's
+//sample invite to appear on the screen.
 let stepsStatus = {
     "stepOne": false,
     "stepTwo": false,
@@ -14,7 +16,6 @@ let stepsStatus = {
 
 //returns starting HTML for Step One
 function holdStepOneHTML() {
-    console.log('holdStepOneHTML ran')
     return `<div class="parameters">
     <p class="param-text">To get started, use this form to name an ingredient you think all your guests will definitely have in your kitchen and a max number of ingredients you want the recipe to have.</p>
     <form id="1-form">
@@ -149,8 +150,6 @@ function holdDetailsFormHTML() {
 </form>`
 }
 
-
-
 //returns HTML that comes up after details form on Step Two is submitted
 function holdSetDetailsHTML(date, time, platform) {
     return `<p class="party-sentence">Your party will be on ${date} at ${time} using ${platform}.</p>
@@ -161,7 +160,7 @@ function holdSetDetailsHTML(date, time, platform) {
 
 //-----RENDER FUNCTIONS-----
 
-//adds starting step one HTML where it belongs
+//adds starting Step One HTML to the page
 function renderStepOne() {
     $("#step-one").append(holdStepOneHTML())
 }
@@ -182,7 +181,7 @@ function formatQueryParams(params) {
     return queryItems.join('&');
 }
 
-//Get those recipes on the page
+//Get those recipes on the page!
 function displayRecipes(responseJson) {
     console.log('displayRecipes ran')
     //if 0 recipes are returned, run the unhappyResult function end the
@@ -261,7 +260,7 @@ function handleTimeZone(timeZone, timeZoneName) {
         return;
     } else {
         console.log("Time zone entered.")
-        return ` (time zone: ${timeZoneName})`;
+        return ` [time zone: ${timeZoneName}]`;
     }
 }
 
