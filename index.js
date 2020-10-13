@@ -37,12 +37,12 @@ function holdRecipeHTML(src, title, num, link, ol) {
                 <input type="submit" value="See all recipes again" class="button"/>
             </form>
             <form class="set-new-params">
-            <input type="submit" value="Toggle parameters box" class="button"/>
+            <input type="submit" value="Toggle parameters box" id="toggle-params-button" class="button toggle-params" aria-pressed="false"/>
         </form>
         </div>
         <div class="square"><img src="${src}" alt="recipe image"/></div>
     </li>`
-    $('#1-recipes').toggleClass("hidden");
+    $('#i-recipes').toggleClass("hidden");
     $(".1-recipe-results").append(html);
 }
 
@@ -217,7 +217,7 @@ function displayRecipes(responseJson) {
         <div class="square"><img src="${responseJson.hits[i].recipe.image}" alt="recipe image"/></div>
     </li>`)};
     $('.1-recipes-found').html(`${responseJson.hits.length} recipes found!`)
-    $('#1-recipes').removeClass('hidden');
+    $('#i-recipes').removeClass('hidden');
 }
 
 //Taking the input values, create the API url, fetch that url, then format
@@ -249,7 +249,7 @@ function getRecipes(defIngr, ingrNum) {
 function unhappyResult() {
     $('#i-recipes-list').empty();
     $('.1-recipes-found').html(`No recipes found. Try a different ingredient or adjust the number of ingredients you want to use.`)
-    $('#1-recipes').removeClass('hidden');
+    $('#i-recipes').removeClass('hidden');
 }
 
 //-----MISC. FUNCTIONS-----
@@ -348,13 +348,14 @@ function watchFindARecipe() {
         const defIngr = $('#i-def-ingr').val();
         const ingrNum = $('#i-ingr-num').val();
         getRecipes(defIngr, ingrNum);
+        location.href = "#i-recipes";
         })
 }
 
 //When the "Let's make it" button is clicked, replace parameters box with recipe
 //information, as stored in holdRecipeHTML function, and adjust Step Three info
 function watchLetsMakeIt() {
-    $('#1-recipes').on('submit', event => {
+    $('#i-recipes').on('submit', event => {
         event.preventDefault();
         console.log('watchLetsMakeIt ran');
         $(".1-recipe-results").removeClass("hidden");
@@ -375,7 +376,7 @@ function watchLetsMakeIt() {
         $(".to-have").empty();
         $(".to-have").append(ol);
         //whenever this button is clicked, send us to top of page
-        location = "#";
+        location.href = "#step-two";
         stepsStatus.stepOne = true;
         console.log(stepsStatus);
         validateSteps();
@@ -387,7 +388,7 @@ function watchLetsMakeIt() {
 function watchSeeAll() {
     $(".1-recipe-results").on("submit", ".see-all-again", event => {
         event.preventDefault();
-        $('#1-recipes').toggleClass("hidden");
+        $('#i-recipes').toggleClass("hidden");
         $(".1-recipe-results").toggleClass("hidden");
     })
 }
@@ -396,6 +397,10 @@ function watchSeeAll() {
 function watchSetNewParams() {
     $(".1-recipe-results").on("submit", ".set-new-params", event => {
         event.preventDefault();
+        // ariaToggle();
+        const pressedBool = $("#toggle-params-button").attr("aria-pressed") === "true";
+        $("#toggle-params-button").toggleClass("toggleparams").attr("aria-pressed", !pressedBool);
+        console.log($(".toggle-params").attr("aria-pressed"));
         $(".parameters").toggleClass("hidden");
     })
 }
@@ -423,6 +428,7 @@ function handleDetailsSubmit() {
         $(".party-sentence").append(handleTimeZone(timeZone, timeZoneName));
         stepsStatus.stepTwo = true;
         validateSteps();
+        location.href = "#step-three";
     })
 }
 
