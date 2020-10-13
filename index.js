@@ -218,6 +218,7 @@ function displayRecipes(responseJson) {
     </li>`)};
     $('.1-recipes-found').html(`${responseJson.hits.length} recipes found!`)
     $('#i-recipes').removeClass('hidden');
+    location.href = "#i-recipes";
 }
 
 //Taking the input values, create the API url, fetch that url, then format
@@ -242,7 +243,7 @@ function getRecipes(defIngr, ingrNum) {
             }
             throw new Error(response.statusText);
         })
-        .then(responseJson => displayRecipes(responseJson));
+        .then(responseJson => displayRecipes(responseJson))
 }
 
 //if improper inputs are given, display the following HTML
@@ -348,7 +349,6 @@ function watchFindARecipe() {
         const defIngr = $('#i-def-ingr').val();
         const ingrNum = $('#i-ingr-num').val();
         getRecipes(defIngr, ingrNum);
-        location.href = "#i-recipes";
         })
 }
 
